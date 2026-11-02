@@ -1,0 +1,17 @@
+class Solution(object):
+    def toLowerCase(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        # Convert the string to a list of characters since strings are immutable in Python
+        char_list = list(s)
+        
+        for i in range(len(char_list)):
+            # Check if the character is an uppercase letter ('A' to 'Z')
+            if 'A' <= char_list[i] <= 'Z':
+                # Add 32 to its ASCII value to get the lowercase equivalent
+                char_list[i] = chr(ord(char_list[i]) + 32)
+                
+        # Join the list back into a single string
+        return "".join(char_list)
