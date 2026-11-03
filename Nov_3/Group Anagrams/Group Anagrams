@@ -1,0 +1,22 @@
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """:type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        anagram_map = {}
+
+        for s in strs:
+            # Create a frequency count array for 26 lowercase letters ('a' through 'z')
+            count = [0] * 26
+            for char in s:
+                # Convert character to an index from 0 to 25
+                count[ord(char) - ord("a")] += 1
+
+            # Convert the list to a tuple so it can be used as a dictionary key
+            key = tuple(count)
+
+            if key not in anagram_map:
+                anagram_map[key] = []
+            anagram_map[key].append(s)
+
+        return list(anagram_map.values())

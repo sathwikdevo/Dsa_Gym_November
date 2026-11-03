@@ -1,0 +1,30 @@
+class Solution(object):
+
+  def isAnagram(self, s, t):
+    """:type s: str
+
+    :type t: str
+    :rtype: bool
+    """
+    # Anagrams must have the exact same length
+    if len(s) != len(t):
+      return False
+
+    # Count frequencies for string s manually
+    count_s = {}
+    for char in s:
+      if char in count_s:
+        count_s[char] = count_s[char] + 1
+      else:
+        count_s[char] = 1
+
+    # Count frequencies for string t manually and compare
+    count_t = {}
+    for char in t:
+      if char in count_t:
+        count_t[char] = count_t[char] + 1
+      else:
+        count_t[char] = 1
+
+    # Verify both dictionaries match
+    return count_s == count_t
