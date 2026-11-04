@@ -1,0 +1,21 @@
+class Solution(object):
+    def numJewelsInStones(self, jewels, stones):
+        """
+        :type jewels: str
+        :type stones: str
+        :rtype: int
+        """
+        # Create a boolean array to mark which ASCII characters are jewels (size 128 for ASCII)
+        is_jewel = [False] * 128
+        
+        # Mark each jewel in our fixed-size array
+        for char in jewels:
+            is_jewel[ord(char)] = True
+            
+        # Count how many stones are jewels
+        count = 0
+        for char in stones:
+            if is_jewel[ord(char)]:
+                count += 1
+                
+        return count

@@ -1,0 +1,30 @@
+class Solution(object):
+    def commonChars(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        # Initialize min_frequencies with the character counts of the first word
+        min_frequencies = [0] * 26
+        for char in words[0]:
+            min_frequencies[ord(char) - ord('a')] += 1
+            
+        # Iterate through the rest of the words and keep the minimum frequency for each character
+        for i in range(1, len(words)):
+            current_frequencies = [0] * 26
+            for char in words[i]:
+                current_frequencies[ord(char) - ord('a')] += 1
+                
+            # Update min_frequencies to find the intersection across all words
+            for j in range(26):
+                if current_frequencies[j] < min_frequencies[j]:
+                    min_frequencies[j] = current_frequencies[j]
+                    
+        # Build the final result list based on the resulting frequencies
+        result = []
+        for j in range(26):
+            # Append each character as many times as its minimum frequency allows
+            for _ in range(min_frequencies[j]):
+                result.append(chr(j + ord('a')))
+                
+        return result

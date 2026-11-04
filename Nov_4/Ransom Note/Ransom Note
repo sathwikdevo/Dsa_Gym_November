@@ -1,0 +1,23 @@
+class Solution(object):
+    def canConstruct(self, ransomNote, magazine):
+        """
+        :type ransomNote: str
+        :type magazine: str
+        :rtype: bool
+        """
+        # Array to store the frequency of each lowercase English letter (a-z)
+        char_count = [0] * 26
+        
+        # Count each character in the magazine
+        for char in magazine:
+            char_count[ord(char) - ord('a')] += 1
+            
+        # Subtract the required characters using the ransomNote
+        for char in ransomNote:
+            index = ord(char) - ord('a')
+            char_count[index] -= 1
+            # If count goes below 0, magazine lacks enough of this character
+            if char_count[index] < 0:
+                return False
+                
+        return True
