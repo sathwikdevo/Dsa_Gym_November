@@ -1,0 +1,104 @@
+class Solution(object):
+    def countPalindromes(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        MOD = 10**9 + 7
+        n = len(s)
+        
+        # We need to count palindromic subsequences of length 5: A B C B A
+        # Since A and B can each be digits from '0' to '9', there are 10 * 10 = 100 
+        # possible pairs for the prefix (A, B).
+        
+        # prefix_count[d1][d2] stores how many times the digit pair (d1, d2) 
+        # has appeared as a prefix so far.
+        prefix_count = [[0] * 10 for _ in range(10)]
+        
+        # suffix_count[d1][d2] stores how many times the digit pair (d1, d2) 
+        # appears as a suffix in the remaining part of the string.
+        suffix_count = [[0] * 10 for _ in range(10)]
+        
+        # Initialize suffix counts for the entire string
+        for i in range(2, n):
+            d2 = int(s[i])
+            for d1 in range(10):
+                # If s[i-1] matches d1, then (d1, d2) is formed
+                pass # We will populate suffix counts dynamically below
+                
+        # Better approach: Precompute suffix counts from right to left
+        for i in range(n - 1, -1, -1):
+            curr = int(s[i])
+            # When we are at index i, s[i] is a potential center C.
+            # We can check all prefix pairs (A, B) and suffix pairs (B, A)
+            # that can form a palindrome A B C B A.
+            # Wait, let's build suffix frequency maps efficiently.
+            
+        # Let's use frequency arrays for the suffix pass
+        suf_single = [0] * 10
+        suf_pairs = [[0] * 10 for _ in range(10)]
+        
+        for i in range(n - 1, -1, -1):
+            d = int(s[i])
+            # Update suffix pairs using current single counts
+            for j in range(10):
+                suf_pairs[d][j] += suf_single[j]
+            suf_single[d] += 1
+
+        # Now do a two-pass DP or prefix/suffix combination sweep
+        pref_single = [0] * 10
+        pref_pairs = [[0] * 10 for _ in range(10)]
+        
+        # Reset suffix for the actual sweep
+        suf_single = [0] * 10
+        suf_pairs = [[0] * 10 for _ in range(10)]
+        
+        # Populate initial suffix counts for all elements from index 2 to n-1
+        for k in range(2, n):
+            d = int(s[k])
+            suf_single[d] += 1
+            
+        ans = 0
+        
+        # Iterate through each possible center position `j` (index 2)
+        for j in range(2, n - 2):
+            # Move s[j-1] from suffix domain to prefix domain
+            prev_char = int(s[j - 1])
+            
+            # Remove prev_char from suffix counts contributions for elements >= j
+            # Actually, standard way is sweeping j from 0 to n-1:
+            pass
+
+        # Let's implement the standard O(10^2 * N) sweep solution:
+        # Precompute suffix counts
+        suf = [0] * 10
+        suf_pair = [[0] * 10 for _ in range(10)]
+        
+        for i in range(n - 1, -1, -1):
+            d = int(s[i])
+            for j in range(10):
+                suf_pair[d][j] += suf[j]
+            suf[d] += 1
+            
+        pref = [0] * 10
+        pref_pair = [[0] * 10 for _ in range(10)]
+        
+        for i in range(n):
+            d = int(s[i])
+            # Remove current element from suffix count since it's now the center or passed
+            suf[d] -= 1
+            for j in range(10):
+                suf_pair[d][j] -= suf[j]
+                
+            # s[i] is the center C
+            # We look for all A, B such that pref_pair[A][B] and suf_pair[B][A] exist
+            for a in range(10):
+                for b in range(10):
+                    ans = (ans + pref_pair[a][b] * suf_pair[b][a]) % MOD
+                    
+            # Add current element to prefix count for future centers
+            for j in range(10):
+                pref_pair[j][d] += pref[j]
+            pref[d] += 1
+            
+        return ans

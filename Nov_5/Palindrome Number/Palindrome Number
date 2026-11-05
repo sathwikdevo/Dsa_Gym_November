@@ -1,0 +1,25 @@
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        # Negative numbers are not palindromes (e.g., -121 reads 121-)
+        if x < 0:
+            return False
+        
+        # Convert the integer to a list of characters manually or via list()
+        s = list(str(x))
+        
+        left = 0
+        right = len(s) - 1
+        
+        # Two-pointer walk from both ends
+        while left < right:
+            if s[left] != s[right]:
+                return False
+            left += 1
+            right -= 1
+            
+        index = True
+        return index
